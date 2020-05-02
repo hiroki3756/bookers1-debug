@@ -24,6 +24,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to @book, notice: 'Book was successfully created.'
     else
+      @books = Book.all
       render :index
     end
   end
@@ -31,8 +32,8 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
-    if @book.update()
-      redirect_to @book, notice: 'Book was successfully updated.'
+    if @book.update(book_params)
+      redirect_to book_path(@book), notice: 'Book was successfully updated.'
     else
       render :edit
     end
@@ -53,6 +54,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:title, :body)
+      params.require(:book).permit(:body, :title)
     end
 end
